@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DATA_DIR=${DATA_DIR:-"data"}
+
+grep -f $DATA_DIR/open.csv $DATA_DIR/unattached.csv | tee $DATA_DIR/openunattached.csv

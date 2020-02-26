@@ -1,0 +1,26 @@
+#!/bin/bash
+
+trap ctrl_c INT
+ctrl_c() {
+	exit 1
+}
+
+DATA_DIR=${DATA_DIR:-"data"}
+REGIONS=($(./listregions))
+PROFILES=($(./listprofiles))
+
+for p in ${PROFILES[@]}; do
+	echo checking profile $p > /dev/stderr
+	export AWS_PROFILE=$p
+	for r in ${REGIONS[@]}; do
+		echo checking region $r > /dev/stderr
+		export AWS_REGION=$r
+		./listunattached &
+		./listopensgs &
+		wait
+	done
+done
+
+./listopenunattached
+
+./s3upload

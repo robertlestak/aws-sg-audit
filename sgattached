@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+	echo SG ID required
+	exit 1
+fi
+
+aws ec2 describe-network-interfaces --filters Name=group-id,Values=$1 | jq -r '.NetworkInterfaces[].Attachment.InstanceId'

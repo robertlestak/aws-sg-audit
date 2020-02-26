@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DATA_DIR=${DATA_DIR:-"data"}
+UNATTACHED_LIST=$DATA_DIR/unattached.csv
+ATTACHED_LIST=$DATA_DIR/attached.csv
+SGS=($(./listsgs $AWS_REGION))
+
+for s in ${SGS[@]}; do
+	ATTACHED=($(./sgattached "$s"))
+	if [[ ${#ATTACHED[@]} -gt 0 ]]; then
+		echo $s ATTACHED ${#ATTACHED[@]} > /dev/stderr
+		echo "$AWS_PROFILE,$AWS_REGION,$s,${ATTACHED[@]}" >> $ATTACHED_LIST
+	else
+		echo "$AWS_PROFILE $AWS_REGION $s unattached" > /dev/stderr
+		echo "$AWS_PROFILE,$AWS_REGION,$s" >> $UNATTACHED_LIST
+	fi
+done
