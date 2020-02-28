@@ -6,15 +6,17 @@ ctrl_c() {
 }
 
 DATA_DIR=${DATA_DIR:-"data"}
+ROLES=($(./listroles))
 REGIONS=($(./listregions))
-PROFILES=($(./listprofiles))
 
-for p in ${PROFILES[@]}; do
-	echo checking profile $p > /dev/stderr
-	export AWS_PROFILE=$p
-	for r in ${REGIONS[@]}; do
-		echo checking region $r > /dev/stderr
-		export AWS_REGION=$r
+for r in ${ROLES[@]}; do
+	echo checking role $r > /dev/stderr
+	source ./assumerole "$r"
+	source ./getaccountalias
+	export ROLE_ARN=$r
+	for n in ${REGIONS[@]}; do
+		echo checking region $n > /dev/stderr
+		export AWS_REGION=$n
 		./listunattached &
 		./listopensgs &
 		wait

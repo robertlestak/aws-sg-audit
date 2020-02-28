@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "$ROLE_ARN" | sed 's,arn:aws:iam::,,' | awk -F':' '{print $1}'

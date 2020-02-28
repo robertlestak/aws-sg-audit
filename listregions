@@ -1,10 +1,11 @@
 #!/bin/bash
 
-DEFAULT_PROFILE=${DEFAULT_PROFILE:-"aws19"}
 echo Listing Regions > /dev/stderr
+
+source ./assumerole "$(./listroles | xargs | awk '{print $1}')"
 
 # hardcoding region as --all-regions doesn't seem to work in container
 
-aws --profile $DEFAULT_PROFILE --region us-east-1 ec2 describe-regions \
+aws --region us-east-1 ec2 describe-regions \
     --query "Regions[].{Name:RegionName}" \
     --output text

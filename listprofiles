@@ -1,4 +1,0 @@
-#!/bin/bash
-
-echo Listing Profiles > /dev/stderr
-grep -o '\[[^]]*\]' ~/.aws/config | sed -e 's,\[,,g' -e 's,\],,g'

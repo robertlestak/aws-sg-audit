@@ -4,6 +4,9 @@ if [[ -z $S3_BUCKET ]]; then
 	return
 fi
 
-aws --profile $S3_PROFILE \
-	s3 sync --delete \
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+unset AWS_SESSION_TOKEN
+
+aws s3 sync --delete \
 	$DATA_DIR/ s3://$S3_BUCKET/aws-sg-audit/

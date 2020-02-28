@@ -5,6 +5,6 @@ OPEN_SGS=$DATA_DIR/open.csv
 OPEN=($(aws ec2 --region $AWS_REGION describe-security-groups --filters Name=ip-permission.cidr,Values='0.0.0.0/0','All' --query "SecurityGroups[*].GroupId" | jq -r '.[]'))
 
 for o in ${OPEN[@]}; do
-	echo "$AWS_PROFILE,$AWS_REGION,$o open" > /dev/stderr 
-	echo "$AWS_PROFILE,$AWS_REGION,$o" >> $OPEN_SGS
+	echo "$AWS_ACCOUNT_ALIAS,$AWS_REGION,$o open" > /dev/stderr 
+	echo "$AWS_ACCOUNT_ALIAS,$AWS_REGION,$o" >> $OPEN_SGS
 done

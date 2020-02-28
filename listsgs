@@ -1,3 +1,8 @@
 #!/bin/bash
 
-aws ec2 --region $1 describe-security-groups --query "SecurityGroups[*].GroupId" --max-items 100000000000 | jq -r '.[]'
+aws ec2 \
+  --region $1 \
+  describe-security-groups \
+  --query "SecurityGroups[*].GroupId" \
+  --max-items 100000000000 | \
+  jq -r '.[]'

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+export AWS_ACCOUNT_ALIAS=$(aws iam list-account-aliases | jq -r '.AccountAliases[0]')

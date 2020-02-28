@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ ! -f ~/.aws/roles.txt ]]; then
+  echo ~/.aws/roles.txt does not exist
+  exit 1
+fi
+
+cat ~/.aws/roles.txt
